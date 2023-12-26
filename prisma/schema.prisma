@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model User {
+  id          String        @id @default(uuid())
+  username    String
+  password    String
+  skills      String[]
+  experience  String
+  isAdmin     Boolean       @default(false)
+  createdAt   DateTime      @default(now())
+  skillId     String?
+  Application Application[]
+  Skill       Skill?        @relation(fields: [skillId], references: [id])
+}
+
+model JobListing {
+  id           String        @id @default(uuid())
+  title        String
+  company      String
+  location     String
+  description  String
+  requirements String[]
+  createdAt    DateTime      @default(now())
+  application  Application[]
+}
+
+model Application {
+  id           String     @id @default(uuid())
+  userId       String
+  jobListingId String
+  createdAt    DateTime   @default(now())
+  jobListing   JobListing @relation(fields: [jobListingId], references: [id])
+  user         User       @relation(fields: [userId], references: [id])
+}
+
+model Skill {
+  id    String @id @default(uuid())
+  name  String
+  users User[]
+}
