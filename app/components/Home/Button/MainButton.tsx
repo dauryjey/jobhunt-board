@@ -6,7 +6,7 @@ interface Props {
 
 export const MainButton: React.FC<Props> = ({ text }: Props) => {
   return (
-    <Button className="rounded-full bg-sky-700 enabled:hover:bg-sky-600 focus:ring-0">
+    <Button pill color="blue">
       {text}
     </Button>
   );

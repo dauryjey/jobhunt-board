@@ -8,7 +8,7 @@ export const NavigationBar: React.FC = () => {
     <>
       <Navbar fluid rounded>
         <NavbarBrand as={Link} href="#">
-          <span className="text-3xl text-sky-700 font-bold ">#</span>
+          <span className="text-3xl text-blue-600 font-bold ">#</span>
           <span className="font-bold text-xl ml-2">JobHunt.Dev</span>
         </NavbarBrand>
         <div className="sm:order-last">
