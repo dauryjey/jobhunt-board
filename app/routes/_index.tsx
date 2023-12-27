@@ -1,5 +1,5 @@
-import { json, type MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { type MetaFunction } from "@remix-run/node";
+import { typedjson, useTypedLoaderData } from "remix-typedjson";
 import { Categories } from "~/components/Home/Categories/Categories";
 import { JobList } from "~/components/Home/JobList/JobList";
 import { NavigationBar } from "~/components/Home/NavigationBar/NavigationBar";
@@ -13,11 +13,11 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader = async () => {
-  return json(await db.jobListing.findMany());
+  return typedjson(await db.jobListing.findMany());
 };
 
 export default function Index() {
-  const jobs = useLoaderData<typeof loader>();
+  const jobs = useTypedLoaderData<typeof loader>();
 
   return (
     <>
