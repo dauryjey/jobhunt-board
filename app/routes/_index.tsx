@@ -3,7 +3,7 @@ import { typedjson, useTypedLoaderData } from "remix-typedjson";
 import { Categories } from "~/components/Home/Categories/Categories";
 import { JobList } from "~/components/Home/JobList/JobList";
 import { NavigationBar } from "~/components/Home/NavigationBar/NavigationBar";
-import { db } from "~/utils/db.server";
+import { db } from "utils/db.server";
 
 export const meta: MetaFunction = () => {
   return [
@@ -24,11 +24,11 @@ export default function Index() {
       <header className="border-b p-4">
         <NavigationBar />
       </header>
-      <main className="pt-2">
+      <main className="mt-4">
         <section className="flex justify-center w-full">
           <Categories />
         </section>
-        <section className="grid justify-center xl:grid-cols-2 gap-5">
+        <section className="grid justify-center xl:grid-cols-4 gap-4 mt-4">
           <JobList jobs={jobs} />
         </section>
       </main>
