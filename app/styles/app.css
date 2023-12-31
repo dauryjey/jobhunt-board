@@ -12,7 +12,10 @@
     body {
         @apply px-2
     }
-    div > input {
-        @apply bg-white rounded-full shadow border-slate-300 !important
+
+    #search {
+        @apply bg-white rounded-full shadow border-slate-300 
     }
 }
+
+

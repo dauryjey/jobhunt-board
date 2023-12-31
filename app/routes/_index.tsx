@@ -1,10 +1,12 @@
-import { type MetaFunction } from "@remix-run/node";
+import { LoaderFunctionArgs, type MetaFunction } from "@remix-run/node";
 import { typedjson, useTypedLoaderData } from "remix-typedjson";
 import { Categories } from "~/components/Common/Categories/Categories";
 import { JobList } from "~/components/Jobs/JobList/JobList";
 import { NavigationBar } from "~/components/Common/NavigationBar/NavigationBar";
 import { db } from "utils/db.server";
 import { Button } from "flowbite-react";
+import { Link } from "@remix-run/react";
+import { authenticator } from "utils/auth.server";
 
 export const meta: MetaFunction = () => {
   return [
@@ -13,19 +15,32 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const loader = async () => {
-  return typedjson(await db.jobListing.findMany());
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const [user, jobs] = await Promise.all([
+    authenticator.isAuthenticated(request),
+    db.jobListing.findMany(),
+  ]);
+
+  return typedjson({ user, jobs });
 };
 
 export default function Index() {
-  const jobs = useTypedLoaderData<typeof loader>();
+  const { user, jobs } = useTypedLoaderData<typeof loader>();
 
   return (
     <>
       <header className="border-b p-4">
         <NavigationBar>
-          <Button color="gray" pill>Log In</Button>
-          <Button color="blue" pill>Sign Up</Button>
+          {!user && (
+            <>
+              <Button color="gray" pill>
+                Log In
+              </Button>
+              <Button as={Link} to="/auth/signup" color="blue" pill>
+                Sign Up
+              </Button>
+            </>
+          )}
         </NavigationBar>
       </header>
       <main className="mt-4">
