@@ -18,7 +18,7 @@ export const meta: MetaFunction = () => {
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const [user, jobs] = await Promise.all([
     authenticator.isAuthenticated(request),
-    db.jobListing.findMany(),
+    db.job.findMany(),
   ]);
 
   return typedjson({ user, jobs });
@@ -36,7 +36,7 @@ export default function Index() {
               <Button color="gray" pill>
                 Log In
               </Button>
-              <Button as={Link} to="/auth/signup" color="blue" pill>
+              <Button as={Link} to="/signup/user" color="blue" pill>
                 Sign Up
               </Button>
             </>
