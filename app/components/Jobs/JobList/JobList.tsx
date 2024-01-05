@@ -1,7 +1,7 @@
-import { JobListing } from "@prisma/client";
+import { Job } from "@prisma/client";
 import { JobCard } from "../JobCard/JobCard";
 
-export const JobList = ({ jobs }: { jobs: JobListing[] }) => {
+export const JobList = ({ jobs }: { jobs: Job[] }) => {
   return (
     <>
       {jobs.map((job) => (

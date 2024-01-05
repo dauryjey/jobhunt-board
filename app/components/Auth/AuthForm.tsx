@@ -6,12 +6,15 @@ import { FormInput } from "../Common/Input/FormInput";
 interface AuthFormProps {
   title: string;
   inputs: authInputs[];
+  children?: React.ReactNode;
 }
 
-export const AuthForm: React.FC<AuthFormProps> = ({ title, inputs }: AuthFormProps) => {
+export const AuthForm: React.FC<AuthFormProps> = ({ title, inputs, children }: AuthFormProps) => {
   return (
     <>
-      <Title title={title} />
+      <div className="pb-2">
+        <Title title={title} />
+      </div>
       <Form method="post" className="flex flex-col gap-4">
         {inputs.map((input) => (
           <FormInput key={input.name} {...input} />
@@ -19,6 +22,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ title, inputs }: AuthFormPro
         <Button type="submit" color="blue" pill>
           {title}
         </Button>
+        { children }
       </Form>
     </>
   );

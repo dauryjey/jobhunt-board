@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-import { JobListing } from "@prisma/client";
+import { Job } from "@prisma/client";
 import { Badge, Button, Card } from "flowbite-react";
 
-export const JobCard = ({ job }: { job: JobListing }) => {
+export const JobCard = ({ job }: { job: Job }) => {
   return (
     <Card className="max-w-sm">
       <h5 className="text-2xl font-bold">{job.title}</h5>
