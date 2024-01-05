@@ -23,13 +23,12 @@ authenticator.use(
           email,
         },
       });
-    } else {
-      user = await db.user.findUnique({
-        where: {
-          email,
-        },
-      });
     }
+    user = await db.user.findUnique({
+      where: {
+        email,
+      },
+    });
 
     if (!user) {
       console.log("The email entered is wrong.");

@@ -33,7 +33,7 @@ export default function Index() {
         <NavigationBar>
           {!user && (
             <>
-              <Button color="gray" pill>
+              <Button as={Link} to="/login" color="gray" pill>
                 Log In
               </Button>
               <Button as={Link} to="/signup/user" color="blue" pill>

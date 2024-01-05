@@ -1,5 +1,6 @@
 import { ActionFunctionArgs } from "@remix-run/node";
 import { Link } from "@remix-run/react";
+import { Checkbox, Label } from "flowbite-react";
 import { authenticator } from "utils/auth.server";
 import { AuthForm } from "~/components/Auth/AuthForm";
 import { inputs } from "~/data/loginForm";
@@ -16,8 +17,8 @@ export default function Login() {
     <section className="flex flex-col justify-center items-center h-screen gap-5">
       <AuthForm inputs={inputs} title="Log In">
         <div>
-          <input type="checkbox" name="isEmployer" id="isEmployer" />
-          <label htmlFor="isEmployer" className="ml-2">I&apos;m an employer</label>
+          <Checkbox name="isEmployer" id="isEmployer" />
+          <Label htmlFor="isEmployer" className="ml-2">I&apos;m an employer</Label>
         </div>
         <p className="text-center">
           Don&apos;t have an account?{" "}
