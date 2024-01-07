@@ -4,8 +4,15 @@ import { createUser } from "utils/createUser.server";
 import { AuthForm } from "~/components/Auth/AuthForm";
 import { inputs } from "~/data/signupForm";
 import { validator } from "utils/validators/signup";
+import { validationError } from "remix-validated-form";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
+  const result = await validator.validate(await request.formData());
+
+  if (result.error) {
+    return validationError(result.error);
+  }
+
   return createUser(request, false);
 };
 
