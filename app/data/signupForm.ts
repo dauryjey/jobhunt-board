@@ -1,3 +1,4 @@
+
 export const inputs: authInputs[] = [
   { name: "fname", value: "First name", type: "text", required: true },
   { name: "lname", value: "Last name", type: "text", required: true },
@@ -16,7 +17,7 @@ export const inputs: authInputs[] = [
     addon: "🔒",
   },
   {
-    name: "repeat-password",
+    name: "confirmPassword",
     value: "Repeat password",
     type: "password",
     required: true,

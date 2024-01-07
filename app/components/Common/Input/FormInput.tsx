@@ -1,4 +1,5 @@
 import { Label, TextInput } from "flowbite-react";
+import { useField } from "remix-validated-form";
 
 interface FormInputProps {
   name: string;
@@ -15,6 +16,7 @@ export const FormInput: React.FC<FormInputProps> = ({
   required,
   addon,
 }: FormInputProps) => {
+  const { error, getInputProps } = useField(name);
   return (
     <div>
       {type !== "checkbox" && (
@@ -28,7 +30,9 @@ export const FormInput: React.FC<FormInputProps> = ({
         required={required}
         addon={addon}
         id={name}
+        {...getInputProps({ id: name })}
       />
+      {error && <p className="text-red-500">{error}</p>}
     </div>
   );
 };
