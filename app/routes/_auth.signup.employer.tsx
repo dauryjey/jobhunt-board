@@ -7,7 +7,7 @@ import { validator } from "utils/validators/signup";
 import { validationError } from "remix-validated-form";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  const result = await validator.validate(await request.formData());
+  const result = await validator.validate(await request.clone().formData());
 
   if (result.error) {
     return validationError(result.error);
