@@ -4,6 +4,7 @@ import { FormStrategy } from "remix-auth-form";
 import bcrypt from "bcryptjs";
 import { db } from "utils/db.server";
 import { Employer, User } from "@prisma/client";
+import { validationError } from "remix-validated-form";
 
 export const authenticator = new Authenticator<User | Employer | Error | null>(
   sessionStorage
@@ -31,7 +32,12 @@ authenticator.use(
     });
 
     if (!user) {
-      console.log("The email entered is wrong.");
+      validationError({
+        formId: "authForm",
+        fieldErrors: {
+          email: "The email entered is wrong",
+        },
+      });
       throw new AuthorizationError();
     }
 

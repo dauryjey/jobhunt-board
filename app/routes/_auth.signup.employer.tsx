@@ -18,7 +18,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
 export default function EmployerSignUp() {
   return (
-    <section className="md:w-1/4">
+    <section>
       <AuthForm
         inputs={inputs}
         title="Sign up as employer"
@@ -28,8 +28,8 @@ export default function EmployerSignUp() {
           type="checkbox"
           name="isEmployer"
           id="isEmployer"
-          hidden
           defaultChecked
+          style={{display: "none"}}
         />
       </AuthForm>
       <p className="text-center">

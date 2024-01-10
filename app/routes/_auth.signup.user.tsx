@@ -18,7 +18,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
 export default function Signup() {
   return (
-    <section className="md:w-1/4">
+    <section>
       <AuthForm inputs={inputs} title="Sign up" validator={validator} />
       <p className="text-center">
         Already have an account?{" "}
