@@ -1,3 +1,4 @@
+
 export const inputs: authInputs[] = [
   {
     name: "email",

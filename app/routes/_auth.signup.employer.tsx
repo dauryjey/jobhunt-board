@@ -29,7 +29,7 @@ export default function EmployerSignUp() {
           name="isEmployer"
           id="isEmployer"
           defaultChecked
-          style={{display: "none"}}
+          style={{ display: "none" }}
         />
       </AuthForm>
       <p className="text-center">
