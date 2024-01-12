@@ -5,8 +5,10 @@ import { JobList } from "~/components/Jobs/JobList/JobList";
 import { NavigationBar } from "~/components/Common/NavigationBar/NavigationBar";
 import { db } from "utils/db.server";
 import { Button } from "flowbite-react";
-import { Form, Link } from "@remix-run/react";
+import { Form, Link, useNavigation, useSearchParams } from "@remix-run/react";
 import { authenticator } from "utils/auth.server";
+import { useState } from "react";
+import { Search } from "~/components/Common/Search/Search";
 
 export const meta: MetaFunction = () => {
   return [
@@ -16,10 +18,25 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const [user, jobs] = await Promise.all([
-    authenticator.isAuthenticated(request),
-    db.job.findMany(),
-  ]);
+  const user = await authenticator.isAuthenticated(request);
+
+  const url = new URL(request.url);
+  const query = url.searchParams.get("query");
+
+  if (!query) {
+    const jobs = await db.job.findMany();
+
+    return typedjson({ user, jobs });
+  }
+
+  const jobs = await db.job.findMany({
+    where: {
+      title: {
+        contains: query,
+        mode: "insensitive",
+      },
+    },
+  });
 
   return typedjson({ user, jobs });
 };
@@ -27,26 +44,45 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export default function Index() {
   const { user, jobs } = useTypedLoaderData<typeof loader>();
 
+  const navigation = useNavigation();
+  const [search, setSearch] = useState<string>("");
+  const [, setSearchParams] = useSearchParams();
+
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    setSearch(event.target.value.toLowerCase());
+  };
+
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
+    event.preventDefault();
+    const params = new URLSearchParams();
+
+    params.set("query", `${search}`);
+    setSearchParams(params);
+  };
+
   return (
     <>
       <header className="border-b p-4">
         <NavigationBar>
-          {user ? (
-            <Form method="post" action="/logout">
-              <Button color="blue" pill type="submit">
-                Log out
-              </Button>
-            </Form>
-          ) : (
-            <>
-              <Button as={Link} to="/login" color="gray" pill>
-                Log In
-              </Button>
-              <Button as={Link} to="/signup/user" color="blue" pill>
-                Sign Up
-              </Button>
-            </>
-          )}
+          <Search handleChange={handleChange} handleSubmit={handleSubmit} />
+          <div className="flex justify-center gap-2 sm:order-last w-full mt-4 md:w-auto md:m-0">
+            {user ? (
+              <Form method="post" action="/logout">
+                <Button color="blue" pill type="submit">
+                  Log out
+                </Button>
+              </Form>
+            ) : (
+              <>
+                <Button as={Link} to="/login" color="gray" pill>
+                  Log In
+                </Button>
+                <Button as={Link} to="/signup/user" color="blue" pill>
+                  Sign Up
+                </Button>
+              </>
+            )}
+          </div>
         </NavigationBar>
       </header>
       <main className="mt-4">
@@ -54,7 +90,13 @@ export default function Index() {
           <Categories />
         </section>
         <section className="grid justify-center xl:grid-cols-4 gap-4 p-4">
-          <JobList jobs={jobs} />
+          {navigation.state === "loading" ? (
+            <span className="font-semibold text-medium">Loading...</span>
+          ) : jobs.length === 0 ? (
+            <span className="font-semibold text-medium">No jobs found.</span>
+          ) : (
+            <JobList jobs={jobs} />
+          )}
         </section>
       </main>
     </>
