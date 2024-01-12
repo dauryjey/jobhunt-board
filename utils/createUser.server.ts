@@ -49,14 +49,16 @@ export const createUser = async (request: Request, isEmployer: boolean) => {
         },
       });
     }
-  } finally {
-    if (!error) {
-      // If the authenticator is not returned in here, the catch block will interpret it as an error.
-      // eslint-disable-next-line no-unsafe-finally
-      return await authenticator.authenticate("form", request, {
-        successRedirect: "/",
-        context: { FormData: form },
-      });
-    }
+
+    console.error(err);
+  }
+
+  if (!error) {
+    // If the authenticator is not returned in here, the catch block will interpret it as an error.
+    // eslint-disable-next-line no-unsafe-finally
+    return await authenticator.authenticate("form", request, {
+      successRedirect: "/",
+      context: { FormData: form },
+    });
   }
 };
