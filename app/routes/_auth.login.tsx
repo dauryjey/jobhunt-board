@@ -28,7 +28,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
 export default function Login() {
   return (
-    <section className="flex flex-col justify-center items-center h-screen gap-5">
+    <section className="flex flex-col justify-center items-center gap-5">
       <AuthForm inputs={inputs} title="Log In" validator={validator} action="/login">
         <div>
           <Checkbox name="isEmployer" id="isEmployer" />

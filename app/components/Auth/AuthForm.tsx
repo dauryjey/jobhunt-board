@@ -33,7 +33,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({
           validator={validator}
           method="post"
           action={action}
-          className="grid gap-4 max-w-[300px]"
+          className="grid gap-4 w-[300px]"
         >
           {inputs.map((input) => (
             <FormInput key={input.name} {...input} />
