@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import { db } from "utils/db.server";
 import { authenticator } from "./auth.server";
 import { validationError } from "remix-validated-form";
+
 export const createUser = async (request: Request, isEmployer: boolean) => {
   const form = await request.clone().formData();
 
@@ -12,6 +13,8 @@ export const createUser = async (request: Request, isEmployer: boolean) => {
     form.get("password") as string,
     form.get("description") as string,
   ];
+
+  let error: unknown = undefined;
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -25,35 +28,35 @@ export const createUser = async (request: Request, isEmployer: boolean) => {
           password: hashedPassword,
         },
       });
-
-      return await authenticator.authenticate("form", request, {
-        successRedirect: "/",
-        context: { FormData: form },
-      });
-    } else {
-      await db.user.create({
-        data: {
-          fname,
-          lname,
-          email,
-          password: hashedPassword,
-          description,
-        },
-      });
     }
-  } catch (error) {
-    if (
-      error instanceof Error &&
-      error.name === "PrismaClientKnownRequestError"
-    ) {
+
+    await db.user.create({
+      data: {
+        fname,
+        lname,
+        email,
+        password: hashedPassword,
+        description,
+      },
+    });
+  } catch (err) {
+    error = err;
+    if (err instanceof Error && err.name === "PrismaClientKnownRequestError") {
       return validationError({
         formId: "authForm",
         fieldErrors: {
           email: "Email already exists",
         },
       });
-    } else {
-      console.error("Unexpected error:", error);
+    }
+  } finally {
+    if (!error) {
+      // If the authenticator is not returned in here, the catch block will interpret it as an error.
+      // eslint-disable-next-line no-unsafe-finally
+      return await authenticator.authenticate("form", request, {
+        successRedirect: "/",
+        context: { FormData: form },
+      });
     }
   }
 };

@@ -9,6 +9,7 @@ interface AuthFormProps {
   validator: Validator<{
     [fieldName: string]: unknown;
   }>;
+  action: string;
   children?: React.ReactNode;
 }
 
@@ -16,6 +17,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({
   title,
   inputs,
   validator,
+  action,
   children,
 }: AuthFormProps) => {
   const isFormValid = useIsValid("authForm");
@@ -30,6 +32,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({
           id="authForm"
           validator={validator}
           method="post"
+          action={action}
           className="grid gap-4 max-w-[300px]"
         >
           {inputs.map((input) => (

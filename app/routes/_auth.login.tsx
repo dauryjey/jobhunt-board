@@ -14,6 +14,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       failureRedirect: "/login",
     });
   } catch (error) {
+    console.error("Authentication Error:", error);
+
     return validationError({
       formId: "authForm",
       fieldErrors: {
@@ -27,7 +29,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 export default function Login() {
   return (
     <section className="flex flex-col justify-center items-center h-screen gap-5">
-      <AuthForm inputs={inputs} title="Log In" validator={validator}>
+      <AuthForm inputs={inputs} title="Log In" validator={validator} action="/login">
         <div>
           <Checkbox name="isEmployer" id="isEmployer" />
           <Label htmlFor="isEmployer" className="ml-2">

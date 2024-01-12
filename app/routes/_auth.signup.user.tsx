@@ -13,13 +13,14 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return validationError(result.error);
   }
 
-  return createUser(request, false);
+  
+  return await createUser(request, false);
 };
 
 export default function Signup() {
   return (
     <section>
-      <AuthForm inputs={inputs} title="Sign up" validator={validator} />
+      <AuthForm inputs={inputs} title="Sign up" validator={validator} action="/signup/user"/>
       <p className="text-center">
         Already have an account?{" "}
         <Link to="/login" className="text-blue-500 hover:text-blue-700">

@@ -13,7 +13,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return validationError(result.error);
   }
 
-  return createUser(request, true);
+  return await createUser(request, true);
 };
 
 export default function EmployerSignUp() {
@@ -23,6 +23,7 @@ export default function EmployerSignUp() {
         inputs={inputs}
         title="Sign up as employer"
         validator={validator}
+        action="/signup/employer"
       >
         <input
           type="checkbox"
