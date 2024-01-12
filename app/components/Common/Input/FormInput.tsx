@@ -21,7 +21,7 @@ export const FormInput: React.FC<FormInputProps> = ({
     <div>
       {type !== "checkbox" && (
         <div className="mb-2 block">
-          <Label htmlFor={name} value={value} className="font-semibold" />
+          <Label htmlFor={name} value={value} className="font-semibold" color={error && "failure"} />
         </div>
       )}
       <TextInput
@@ -31,8 +31,9 @@ export const FormInput: React.FC<FormInputProps> = ({
         addon={addon}
         id={name}
         {...getInputProps({ id: name })}
+        color={error && "failure"}
+        helperText={error}
       />
-      {error && <p className="text-red-500">{error}</p>}
     </div>
   );
 };
