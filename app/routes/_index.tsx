@@ -5,7 +5,7 @@ import { JobList } from "~/components/Jobs/JobList/JobList";
 import { NavigationBar } from "~/components/Common/NavigationBar/NavigationBar";
 import { db } from "utils/db.server";
 import { Button } from "flowbite-react";
-import { Link } from "@remix-run/react";
+import { Form, Link } from "@remix-run/react";
 import { authenticator } from "utils/auth.server";
 
 export const meta: MetaFunction = () => {
@@ -31,7 +31,13 @@ export default function Index() {
     <>
       <header className="border-b p-4">
         <NavigationBar>
-          {!user && (
+          {user ? (
+            <Form method="post" action="/logout">
+              <Button color="blue" pill type="submit">
+                Log out
+              </Button>
+            </Form>
+          ) : (
             <>
               <Button as={Link} to="/login" color="gray" pill>
                 Log In
