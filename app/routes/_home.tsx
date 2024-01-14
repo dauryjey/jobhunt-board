@@ -32,7 +32,7 @@ export default function Home() {
             {user ? (
               <>
                 <div className="flex justify-center items-center">
-                  <p className="font-medium">{user.fname}</p>
+                  <Button color="gray" pill>{user.fname}</Button>
                 </div>
                 <Form method="post" action="/logout">
                   <Button color="blue" pill type="submit">
