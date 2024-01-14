@@ -10,7 +10,7 @@ import { inputs } from "~/data/loginForm";
 export const action = async ({ request }: ActionFunctionArgs) => {
   try {
     return await authenticator.authenticate("form", request, {
-      successRedirect: "/",
+      successRedirect: "/jobs",
       failureRedirect: "/login",
     });
   } catch (error) {

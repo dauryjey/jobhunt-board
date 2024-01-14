@@ -13,7 +13,7 @@ export const meta: MetaFunction = () => {
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const user = await authenticator.isAuthenticated(request, {
-    successRedirect: "/",
+    successRedirect: "/jobs",
   });
 
   return user;

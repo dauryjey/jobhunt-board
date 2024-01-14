@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 import { db } from "utils/db.server";
 import { Employer, User } from "@prisma/client";
 
-export const authenticator = new Authenticator<User | Employer | Error | null>(
+export const authenticator = new Authenticator<User | Employer>(
   sessionStorage
 );
 
