@@ -6,6 +6,11 @@ import { validationError } from "remix-validated-form";
 export const createUser = async (request: Request, isEmployer: boolean) => {
   const form = await request.clone().formData();
 
+  /* 
+  The use of "as" is necessitated by form.get(), which returns "FormDataEntryValue | null." 
+  However, remix form validation ensures that every field invariably contains a string.
+  */
+
   const [fname, lname, email, password, description] = [
     form.get("fname") as string,
     form.get("lname") as string,
@@ -41,6 +46,9 @@ export const createUser = async (request: Request, isEmployer: boolean) => {
     });
   } catch (err) {
     error = err;
+    /* 
+      The returned validationError is intended for utilization by the Remix form validation library, subsequently displayed on the frontend.
+    */
     if (err instanceof Error && err.name === "PrismaClientKnownRequestError") {
       return validationError({
         formId: "authForm",

@@ -17,6 +17,7 @@ authenticator.use(
 
     let user: User | Employer | null = null;
 
+    // Check user role
     if (isEmployer === "on") {
       user = await db.employer.findUnique({
         where: {
