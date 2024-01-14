@@ -38,7 +38,7 @@ export default function Login() {
         </div>
         <p className="text-center">
           Don&apos;t have an account?{" "}
-          <Link to="/signup/user" className="text-blue-500 hover:text-blue-700">
+          <Link to="/signup/user" className="text-blue-500 hover:text-blue-700" prefetch="intent">
             Sign up
           </Link>
         </p>

@@ -42,10 +42,10 @@ export default function Home() {
               </>
             ) : (
               <>
-                <Button as={Link} to="/login" color="gray" pill>
+                <Button as={Link} to="/login" color="gray" pill prefetch="intent">
                   Log In
                 </Button>
-                <Button as={Link} to="/signup/user" color="blue" pill>
+                <Button as={Link} to="/signup/user" color="blue" pill prefetch="intent">
                   Sign Up
                 </Button>
               </>

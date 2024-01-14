@@ -20,7 +20,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 export default function Signup() {
   return (
     <section>
-      <AuthForm inputs={inputs} title="Sign up" validator={validator} action="/signup/user"/>
+      <AuthForm inputs={inputs} title="Sign up" validator={validator} action="/signup/user" prefetch="intent"/>
       <p className="text-center">
         Already have an account?{" "}
         <Link to="/login" className="text-blue-500 hover:text-blue-700">

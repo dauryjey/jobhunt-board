@@ -35,12 +35,12 @@ export default function EmployerSignUp() {
       </AuthForm>
       <p className="text-center">
         Already have an account?{" "}
-        <Link to="/login" className="text-blue-500 hover:text-blue-700">
+        <Link to="/login" className="text-blue-500 hover:text-blue-700" prefetch="intent">
           Log in
         </Link>
       </p>
       <p className="text-center">
-        <Link to="/signup/user" className="text-blue-500 hover:text-blue-700">
+        <Link to="/signup/user" className="text-blue-500 hover:text-blue-700" prefetch="intent">
           Sign up as job hunter
         </Link>
       </p>
