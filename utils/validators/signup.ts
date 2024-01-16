@@ -4,8 +4,8 @@ import { withZod } from "@remix-validated-form/with-zod";
 export const validator = withZod(
   z
     .object({
-      fname: z.string().trim().min(1, "First name is required"),
-      lname: z.string().trim().min(1, "Last name is required"),
+      firstName: z.string().trim().min(1, "First name is required"),
+      lastName: z.string().trim().min(1, "Last name is required"),
       email: z
         .string()
         .trim()

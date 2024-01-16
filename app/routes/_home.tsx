@@ -2,10 +2,10 @@ import { authenticator } from "utils/auth.server";
 import { Button } from "flowbite-react";
 import { Form, Link, Outlet } from "@remix-run/react";
 import { LoaderFunctionArgs, type MetaFunction } from "@remix-run/node";
-
 import { NavigationBar } from "~/components/Common/NavigationBar/NavigationBar";
 import { Search } from "~/components/Common/Search/Search";
 import { typedjson, useTypedLoaderData } from "remix-typedjson";
+import { Employer, User } from "@prisma/client";
 
 export const meta: MetaFunction = () => {
   return [
@@ -15,7 +15,7 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const user = await authenticator.isAuthenticated(request);
+  const user: User | Employer | null = await authenticator.isAuthenticated(request);
 
   return typedjson({ user });
 };
@@ -32,7 +32,7 @@ export default function Home() {
             {user ? (
               <>
                 <div className="flex justify-center items-center">
-                  <Button color="gray" pill>{user.fname}</Button>
+                  <Button color="gray" pill>{user.firstName}</Button>
                 </div>
                 <Form method="post" action="/logout">
                   <Button color="blue" pill type="submit">

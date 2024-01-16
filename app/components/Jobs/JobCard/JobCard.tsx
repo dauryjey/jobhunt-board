@@ -7,8 +7,10 @@ export const JobCard = ({ job }: { job: Job }) => {
     <Card className="max-w-sm">
       <h5 className="text-2xl font-bold">{job.title}</h5>
       <small>{job.company}</small>
-      <p>{job.description}</p>
-      <div className="flex gap-2">
+      <div className="line-clamp-3">
+        <p className="pb-0.5">{job.description}</p>
+      </div>
+      <div className="flex flex-wrap gap-2">
         {job.requirements.map((requirement, idx) => (
           <Badge key={idx} color="dark">
             {requirement}

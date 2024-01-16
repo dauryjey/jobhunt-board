@@ -1,7 +1,7 @@
 
 export const inputs: authInputs[] = [
-  { name: "fname", value: "First name", type: "text", required: true },
-  { name: "lname", value: "Last name", type: "text", required: true },
+  { name: "firstName", value: "First name", type: "text", required: true },
+  { name: "lastName", value: "Last name", type: "text", required: true },
   {
     name: "email",
     value: "Email",

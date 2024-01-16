@@ -1,10 +1,11 @@
 -- CreateTable
 CREATE TABLE "Employer" (
     "id" TEXT NOT NULL,
-    "fname" TEXT NOT NULL,
-    "lname" TEXT NOT NULL,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
+    "role" TEXT NOT NULL DEFAULT 'employer',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Employer_pkey" PRIMARY KEY ("id")
@@ -13,11 +14,11 @@ CREATE TABLE "Employer" (
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
-    "fname" TEXT NOT NULL,
-    "lname" TEXT NOT NULL,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "description" TEXT,
+    "role" TEXT NOT NULL DEFAULT 'user',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -40,6 +41,7 @@ CREATE TABLE "Job" (
 -- CreateTable
 CREATE TABLE "Application" (
     "id" TEXT NOT NULL,
+    "message" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "jobId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

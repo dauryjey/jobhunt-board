@@ -11,9 +11,9 @@ export const createUser = async (request: Request, isEmployer: boolean) => {
   However, remix form validation ensures that every field invariably contains a string.
   */
 
-  const [fname, lname, email, password, description] = [
-    form.get("fname") as string,
-    form.get("lname") as string,
+  const [firstName, lastName, email, password] = [
+    form.get("firstName") as string,
+    form.get("lastName") as string,
     form.get("email") as string,
     form.get("password") as string,
     form.get("description") as string,
@@ -27,8 +27,8 @@ export const createUser = async (request: Request, isEmployer: boolean) => {
     if (isEmployer) {
       await db.employer.create({
         data: {
-          fname,
-          lname,
+          firstName,
+          lastName,
           email,
           password: hashedPassword,
         },
@@ -37,11 +37,10 @@ export const createUser = async (request: Request, isEmployer: boolean) => {
 
     await db.user.create({
       data: {
-        fname,
-        lname,
+        firstName,
+        lastName,
         email,
         password: hashedPassword,
-        description,
       },
     });
   } catch (err) {
