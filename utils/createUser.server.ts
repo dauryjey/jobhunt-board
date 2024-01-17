@@ -16,7 +16,6 @@ export const createUser = async (request: Request, isEmployer: boolean) => {
     form.get("lastName") as string,
     form.get("email") as string,
     form.get("password") as string,
-    form.get("description") as string,
   ];
 
   const hashedPassword = await bcrypt.hash(password, 10);
