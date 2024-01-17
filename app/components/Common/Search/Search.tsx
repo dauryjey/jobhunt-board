@@ -11,7 +11,7 @@ export const Search: React.FC = () => {
           type="text"
           icon={FaSearch}
           placeholder="Search"
-          className="min-w-[30vw]"
+          className="min-w-[30vw] [&>input]:bg-white"
         />
       </Form>
   );

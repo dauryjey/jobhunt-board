@@ -6,8 +6,8 @@ import { Link } from "@remix-run/react";
 
 export const Categories: React.FC = () => {
   return (
-    <div className="flex items-center justify-center flex-wrap gap-2 [&>button]:font-semibold [&>button]:border-none">
-      <Button color="light" size="lg" className="focus:ring-0" as={Link} to={"/react"} prefetch="intent">
+    <div className="flex items-center justify-center flex-wrap gap-2 [&>a]:font-semibold [&>a]:border-none [&>a:hover]:bg-blue-600 [&>a:hover]:text-white [&>a:focus]:ring-white [&>a:focus]:bg-blue-600 [&>a:focus]:text-white [&>a:focus]:transition-all">
+      <Button color="light" size="lg" className="" as={Link} to={"/react"} prefetch="intent">
         <FaReact className="text-xl mr-2" />
         React
       </Button>
