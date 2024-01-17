@@ -19,8 +19,6 @@ export const createUser = async (request: Request, isEmployer: boolean) => {
     form.get("description") as string,
   ];
 
-  let error: unknown = undefined;
-
   const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
@@ -43,12 +41,19 @@ export const createUser = async (request: Request, isEmployer: boolean) => {
         password: hashedPassword,
       },
     });
-  } catch (err) {
-    error = err;
-    /* 
-      The returned validationError is intended for utilization by the Remix form validation library, subsequently displayed on the frontend.
-    */
-    if (err instanceof Error && err.name === "PrismaClientKnownRequestError") {
+
+    return await authenticator.authenticate("form", request, {
+      successRedirect: "/jobs",
+      throwOnError: true,
+      context: { FormData: form },
+    });
+  } catch (error) {
+    if (error instanceof Response) return error;
+
+    if (
+      error instanceof Error &&
+      error.name === "PrismaClientKnownRequestError"
+    ) {
       return validationError({
         formId: "authForm",
         fieldErrors: {
@@ -57,14 +62,6 @@ export const createUser = async (request: Request, isEmployer: boolean) => {
       });
     }
 
-    console.error(err);
-  }
-
-  if (!error) {
-    // If the authenticator is not returned in here, the catch block will interpret it as an error.
-    return await authenticator.authenticate("form", request, {
-      successRedirect: "/jobs",
-      context: { FormData: form },
-    });
+    return console.error(error);
   }
 };

@@ -1,6 +1,7 @@
 import { ActionFunctionArgs } from "@remix-run/node";
 import { Link } from "@remix-run/react";
 import { Checkbox, Label } from "flowbite-react";
+import { AuthorizationError } from "remix-auth";
 import { validationError } from "remix-validated-form";
 import { authenticator } from "utils/auth.server";
 import { validator } from "utils/validators/login";
@@ -11,25 +12,34 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   try {
     return await authenticator.authenticate("form", request, {
       successRedirect: "/jobs",
-      failureRedirect: "/login",
+      throwOnError: true,
     });
   } catch (error) {
-    console.error("Authentication Error:", error);
+    if (error instanceof Response) return error;
 
-    return validationError({
-      formId: "authForm",
-      fieldErrors: {
-        password:
-          "Please verify that your email and password are accurate, or confirm the existence of your user account.",
-      },
-    });
+    if (error instanceof AuthorizationError) {
+      return validationError({
+        formId: "authForm",
+        fieldErrors: {
+          password:
+            "Please verify that your email and password are accurate, or confirm the existence of your user account.",
+        },
+      });
+    }
+
+    return console.error(error);
   }
 };
 
 export default function Login() {
   return (
     <section className="flex flex-col justify-center items-center gap-5">
-      <AuthForm inputs={inputs} title="Log In" validator={validator} action="/login">
+      <AuthForm
+        inputs={inputs}
+        title="Log In"
+        validator={validator}
+        action="/login"
+      >
         <div>
           <Checkbox name="isEmployer" id="isEmployer" />
           <Label htmlFor="isEmployer" className="ml-2">
@@ -38,7 +48,11 @@ export default function Login() {
         </div>
         <p className="text-center">
           Don&apos;t have an account?{" "}
-          <Link to="/signup/user" className="text-blue-500 hover:text-blue-700" prefetch="intent">
+          <Link
+            to="/signup/user"
+            className="text-blue-500 hover:text-blue-700"
+            prefetch="intent"
+          >
             Sign up
           </Link>
         </p>
