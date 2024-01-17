@@ -1,24 +1,31 @@
-import { Categories } from "~/components/Common/Categories/Categories"
-import { JobList } from "../JobList/JobList"
-import { Job } from "@prisma/client"
+import { Categories } from "~/components/Common/Categories/Categories";
+import { JobList } from "../JobList/JobList";
+import { Job } from "@prisma/client";
 
 interface JobSectionProps {
-  jobs: Job[]
+  jobs: Job[];
+  isEmployer?: boolean;
 }
 
-export const JobSection: React.FC<JobSectionProps> = ({ jobs }: JobSectionProps) => {
+export const JobSection: React.FC<JobSectionProps> = ({
+  jobs,
+  isEmployer,
+}: JobSectionProps) => {
   return (
     <main className="mt-4">
-    <section className="flex justify-center w-full">
-      <Categories />
-    </section>
-    <section className="grid justify-center xl:grid-cols-4 gap-4 p-4">
-      {jobs.length === 0 ? (
-        <span className="font-semibold text-medium">No jobs found.</span>
-      ) : (
-        <JobList jobs={jobs} />
+      {!isEmployer && (
+        <section className="flex justify-center w-full">
+          <Categories />
+        </section>
       )}
-    </section>
-  </main>
-  )
-}
+
+      <section className="grid justify-center xl:grid-cols-3 gap-4 p-4">
+        {jobs.length === 0 ? (
+          <span className="font-semibold text-medium">No jobs found.</span>
+        ) : (
+          <JobList jobs={jobs} isEmployer={isEmployer} />
+        )}
+      </section>
+    </main>
+  );
+};

@@ -1,11 +1,11 @@
 import { authenticator } from "utils/auth.server";
-import { Button } from "flowbite-react";
-import { Form, Link, Outlet } from "@remix-run/react";
+import { Outlet } from "@remix-run/react";
 import { LoaderFunctionArgs, type MetaFunction } from "@remix-run/node";
 import { NavigationBar } from "~/components/Common/NavigationBar/NavigationBar";
 import { Search } from "~/components/Common/Search/Search";
-import { typedjson, useTypedLoaderData } from "remix-typedjson";
+import { redirect, typedjson, useTypedLoaderData } from "remix-typedjson";
 import { Employer, User } from "@prisma/client";
+import { NavButtons } from "~/components/Common/NavigationBar/NavButtons";
 
 export const meta: MetaFunction = () => {
   return [
@@ -16,6 +16,10 @@ export const meta: MetaFunction = () => {
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const user: User | Employer | null = await authenticator.isAuthenticated(request);
+
+  if (user?.role === "employer") {
+    return redirect("/dashboard")
+  }
 
   return typedjson({ user });
 };
@@ -28,29 +32,7 @@ export default function Home() {
       <header className="border-b p-4">
         <NavigationBar>
           <Search />
-          <div className="flex justify-center gap-2 sm:order-last w-full mt-4 md:w-auto md:m-0">
-            {user ? (
-              <>
-                <div className="flex justify-center items-center">
-                  <Button color="gray" pill>{user.firstName}</Button>
-                </div>
-                <Form method="post" action="/logout">
-                  <Button color="blue" pill type="submit">
-                    Log out
-                  </Button>
-                </Form>
-              </>
-            ) : (
-              <>
-                <Button as={Link} to="/login" color="gray" pill prefetch="intent">
-                  Log In
-                </Button>
-                <Button as={Link} to="/signup/user" color="blue" pill prefetch="intent">
-                  Sign Up
-                </Button>
-              </>
-            )}
-          </div>
+          <NavButtons user={user} />
         </NavigationBar>
       </header>
       <Outlet />

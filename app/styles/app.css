@@ -13,8 +13,8 @@
         @apply px-2
     }
 
-    #search {
-        @apply bg-white rounded-full shadow border-slate-300 
+    #q {
+        @apply bg-white rounded-full
     }
 }
 

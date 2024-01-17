@@ -1,8 +1,7 @@
 import { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
-import { Navbar } from "flowbite-react";
 import { authenticator } from "utils/auth.server";
-import { Brand } from "~/components/Common/NavigationBar/Brand";
+import { NavigationBar } from "~/components/Common/NavigationBar/NavigationBar";
 
 export const meta: MetaFunction = () => {
   return [
@@ -22,12 +21,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export default function Authentication() {
   return (
     <>
-      <header>
-        <Navbar fluid rounded>
-          <Brand />
-        </Navbar>
+      <header className="p-4 mb-4">
+        <NavigationBar />
       </header>
-      <main className="flex flex-col justify-center items-center mt-4">
+      <main className="flex flex-col justify-center items-center">
         <Outlet />
       </main>
     </>

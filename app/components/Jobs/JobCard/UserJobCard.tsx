@@ -2,7 +2,7 @@
 import { Job } from "@prisma/client";
 import { Badge, Button, Card } from "flowbite-react";
 
-export const JobCard = ({ job }: { job: Job }) => {
+export const UserJobCard = ({ job }: { job: Job }) => {
   return (
     <Card className="max-w-sm">
       <h5 className="text-2xl font-bold">{job.title}</h5>

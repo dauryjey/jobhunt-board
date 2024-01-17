@@ -1,12 +1,25 @@
 import { Job } from "@prisma/client";
-import { JobCard } from "../JobCard/JobCard";
+import { UserJobCard } from "../JobCard/UserJobCard";
+import { EmployerJobCard } from "../JobCard/EmployerJobCard";
 
-export const JobList = ({ jobs }: { jobs: Job[] }) => {
+interface JobListProps {
+  jobs: Job[];
+  isEmployer?: boolean;
+}
+
+export const JobList: React.FC<JobListProps> = ({
+  jobs,
+  isEmployer,
+}: JobListProps) => {
   return (
     <>
-      {jobs.map((job) => (
-        <JobCard key={job.id} job={job} />
-      ))}
+      {jobs.map((job) => {
+        if (isEmployer) {
+          return <EmployerJobCard key={job.id} job={job} />;
+        }
+
+        return <UserJobCard key={job.id} job={job} />;
+      })}
     </>
   );
 };
