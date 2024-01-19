@@ -1,4 +1,5 @@
 import { Job } from "@prisma/client";
+import { Link } from "@remix-run/react";
 import { Badge, Button, Card } from "flowbite-react";
 
 export const EmployerJobCard = ({ job }: { job: Job }) => {
@@ -19,8 +20,8 @@ export const EmployerJobCard = ({ job }: { job: Job }) => {
         </div>
       </div>
       <div className="flex md:flex-col justify-center items-center gap-2">
-        <Button color="blue">Edit</Button>
-        <Button color="blue">Delete</Button>
+        <Button color="blue" outline as={Link} to={`dashboard/update/${job.id}`}>Edit</Button>
+        <Button color="red" as={Link} to={`dashboard/delete/${job.id}`}>Delete</Button>
       </div>
     </Card>
   );
