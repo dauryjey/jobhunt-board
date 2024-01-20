@@ -1,5 +1,5 @@
 
-export const inputs: authInputs[] = [
+export const inputs: ValidatedInput[] = [
   {
     name: "email",
     value: "Email",

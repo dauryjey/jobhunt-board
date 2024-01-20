@@ -1,10 +1,11 @@
 import { ActionFunctionArgs } from "@remix-run/node";
-import { Link } from "@remix-run/react";
+import { Link, useNavigation } from "@remix-run/react";
 import { createUser } from "utils/createUser.server";
 import { AuthForm } from "~/components/Auth/AuthForm";
 import { inputs } from "~/data/signupForm";
 import { validator } from "utils/validators/signup";
 import { validationError } from "remix-validated-form";
+import { Loading } from "~/components/Common/Message/Loading";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const result = await validator.validate(await request.clone().formData());
@@ -17,6 +18,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function EmployerSignUp() {
+  const { state } = useNavigation()
+  
   return (
     <section>
       <AuthForm
@@ -25,6 +28,7 @@ export default function EmployerSignUp() {
         validator={validator}
         action="/signup/employer"
       >
+      <Loading state={state} />
         <input
           type="checkbox"
           name="isEmployer"

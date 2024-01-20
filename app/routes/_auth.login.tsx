@@ -1,11 +1,12 @@
 import { ActionFunctionArgs } from "@remix-run/node";
-import { Link } from "@remix-run/react";
+import { Link, useNavigation } from "@remix-run/react";
 import { Checkbox, Label } from "flowbite-react";
 import { AuthorizationError } from "remix-auth";
 import { validationError } from "remix-validated-form";
 import { authenticator } from "utils/auth.server";
 import { validator } from "utils/validators/login";
 import { AuthForm } from "~/components/Auth/AuthForm";
+import { Loading } from "~/components/Common/Message/Loading";
 import { inputs } from "~/data/loginForm";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -32,6 +33,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function Login() {
+  const { state } = useNavigation()
+  
   return (
     <section className="flex flex-col justify-center items-center gap-5">
       <AuthForm
@@ -40,6 +43,7 @@ export default function Login() {
         validator={validator}
         action="/login"
       >
+      <Loading state={state} />
         <div>
           <Checkbox name="isEmployer" id="isEmployer" />
           <Label htmlFor="isEmployer" className="ml-2">
