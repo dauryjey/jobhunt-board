@@ -1,6 +1,6 @@
 import { Employer, User } from "@prisma/client";
 import { LoaderFunctionArgs } from "@remix-run/node";
-import { Link } from "@remix-run/react";
+import { Link, useOutletContext } from "@remix-run/react";
 import { Button } from "flowbite-react";
 import { redirect, typedjson, useTypedLoaderData } from "remix-typedjson";
 import { authenticator } from "utils/auth.server";
@@ -20,13 +20,14 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       },
     });
 
-    return typedjson({ user, jobs });
+    return typedjson({ jobs });
   }
 
   return redirect("/jobs");
 };
 export default function Dashboard() {
-  const { user, jobs } = useTypedLoaderData<typeof loader>();
+  const { jobs } = useTypedLoaderData<typeof loader>();
+  const user = useOutletContext<User>()
 
   return (
     <>

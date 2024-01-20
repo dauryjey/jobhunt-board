@@ -5,7 +5,7 @@ import { ValidatedForm, Validator, useIsValid } from "remix-validated-form";
 
 interface AuthFormProps {
   title: string;
-  inputs: authInputs[];
+  inputs: ValidatedInput[];
   validator: Validator<{
     [fieldName: string]: unknown;
   }>;

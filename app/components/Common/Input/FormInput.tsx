@@ -1,4 +1,4 @@
-import { Label, TextInput } from "flowbite-react";
+import { Label, TextInput, Textarea } from "flowbite-react";
 import { useField } from "remix-validated-form";
 
 interface FormInputProps {
@@ -21,19 +21,40 @@ export const FormInput: React.FC<FormInputProps> = ({
     <div>
       {type !== "checkbox" && (
         <div className="mb-2 block">
-          <Label htmlFor={name} value={value} className="font-semibold" color={error && "failure"} />
+          <Label
+            htmlFor={name}
+            value={value}
+            className="font-semibold"
+            color={error && "failure"}
+          />
         </div>
       )}
-      <TextInput
-        name={name}
-        type={type}
-        required={required}
-        addon={addon}
-        id={name}
-        {...getInputProps({ id: name })}
-        color={error && "failure"}
-        helperText={error}
-      />
+      {
+        {
+          textarea: (
+            <Textarea
+              name={name}
+              required={required}
+              id={name}
+              {...getInputProps({ id: name })}
+              color={error && "failure"}
+              helperText={error}
+            />
+          ),
+          text: (
+            <TextInput
+              name={name}
+              type={type}
+              required={required}
+              addon={addon}
+              id={name}
+              {...getInputProps({ id: name })}
+              color={error && "failure"}
+              helperText={error}
+            />
+          ),
+        }[type]
+      }
     </div>
   );
 };

@@ -1,4 +1,4 @@
-interface authInputs {
+interface ValidatedInput {
   name: string;
   value: string;
   type: string;
