@@ -37,6 +37,7 @@ model Job {
   location     String
   description  String
   requirements String[]
+  available    Boolean       @default(true)
   createdAt    DateTime      @default(now())
   application  Application[]
   Employer     Employer      @relation(fields: [employerId], references: [id])
