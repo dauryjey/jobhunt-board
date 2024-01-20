@@ -1,6 +1,8 @@
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { redirect, typedjson, useTypedLoaderData } from "remix-typedjson";
 import { db } from "utils/db.server";
+import { NavContainer } from "~/components/Common/NavigationBar/NavContainer";
+import { NavigationBar } from "~/components/Common/NavigationBar/NavigationBar";
 import { JobSection } from "~/components/Jobs/JobSection/JobSection";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
@@ -28,9 +30,10 @@ export default function Category() {
 
   return (
     <>
-      <header className="border-b p-4">
+      <NavContainer>
+        <NavigationBar />
         <JobSection jobs={jobs} />
-      </header>
+      </NavContainer>
     </>
   );
 }

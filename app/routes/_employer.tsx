@@ -4,6 +4,7 @@ import { Outlet } from "@remix-run/react";
 import { redirect, typedjson, useTypedLoaderData } from "remix-typedjson";
 import { authenticator } from "utils/auth.server";
 import { NavButtons } from "~/components/Common/NavigationBar/NavButtons";
+import { NavContainer } from "~/components/Common/NavigationBar/NavContainer";
 import { NavigationBar } from "~/components/Common/NavigationBar/NavigationBar";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -23,12 +24,12 @@ export default function EmployerIndex() {
 
   return (
     <>
-      <header className="p-4 mb-4">
+      <NavContainer>
         <NavigationBar>
           <NavButtons user={user} />
         </NavigationBar>
-      </header>
-      <Outlet />
+      </NavContainer>
+      <Outlet context={user}/>
     </>
   );
 }

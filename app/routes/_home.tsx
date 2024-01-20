@@ -6,6 +6,7 @@ import { Search } from "~/components/Common/Search/Search";
 import { redirect, typedjson, useTypedLoaderData } from "remix-typedjson";
 import { Employer, User } from "@prisma/client";
 import { NavButtons } from "~/components/Common/NavigationBar/NavButtons";
+import { NavContainer } from "~/components/Common/NavigationBar/NavContainer";
 
 export const meta: MetaFunction = () => {
   return [
@@ -15,10 +16,12 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const user: User | Employer | null = await authenticator.isAuthenticated(request);
+  const user: User | Employer | null = await authenticator.isAuthenticated(
+    request
+  );
 
   if (user?.role === "employer") {
-    return redirect("/dashboard")
+    return redirect("/dashboard");
   }
 
   return typedjson({ user });
@@ -29,12 +32,12 @@ export default function Home() {
 
   return (
     <>
-      <header className="border-b p-4">
+      <NavContainer>
         <NavigationBar>
           <Search />
           <NavButtons user={user} />
         </NavigationBar>
-      </header>
+      </NavContainer>
       <Outlet />
     </>
   );
