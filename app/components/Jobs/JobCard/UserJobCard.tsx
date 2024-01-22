@@ -4,9 +4,11 @@ import { Badge, Button, Card } from "flowbite-react";
 
 export const UserJobCard = ({ job }: { job: Job }) => {
   return (
-    <Card className="max-w-sm">
+    <Card className="max-w-xl">
+      <div>
       <h5 className="text-2xl font-bold">{job.title}</h5>
       <small>{job.company}</small>
+      </div>
       <div className="line-clamp-3">
         <p className="pb-0.5">{job.description}</p>
       </div>

@@ -1,12 +1,16 @@
 import { Job } from "@prisma/client";
 import { Link } from "@remix-run/react";
 import { Badge, Button, Card } from "flowbite-react";
+import { Status } from "./Status";
 
 export const EmployerJobCard = ({ job }: { job: Job }) => {
   return (
     <Card className="max-w-md [&>div]:md:flex-row [&>div]:justify-start [&>div]:w-full" horizontal>
       <div className="w-10/12">
         <div>
+          <div>
+            <Status available={job.available} />
+          </div>
           <h5 className="text-2xl font-bold">{job.title}</h5>
           <small>{job.company}</small>
           <div className="line-clamp-3">

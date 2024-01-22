@@ -31,13 +31,15 @@ export default function Dashboard() {
 
   return (
     <>
-      <main className="md:flex gap-5 m-5">
+      <main className="md:flex gap-5 m-5 [&>aside]:place-self-start">
         <EmployerProfile user={user} jobs={jobs} />
         <section className="md:w-4/6">
           <div className="flex justify-center my-4 md:block">
-            <Button color="blue" as={Link} to={"/dashboard/create"}>Post a new job</Button>
+            <Button color="blue" as={Link} to={"/create"}>Post a new job</Button>
           </div>
-          <JobList jobs={jobs} isEmployer />
+          <div className="grid gap-4">
+            <JobList jobs={jobs} isEmployer />
+          </div>
         </section>
       </main>
     </>
