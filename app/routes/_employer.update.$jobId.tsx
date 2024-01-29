@@ -1,13 +1,11 @@
 import { Employer, Job, User } from "@prisma/client";
 import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { useActionData, useNavigation } from "@remix-run/react";
-import { Button, Toast } from "flowbite-react";
+import { Button } from "flowbite-react";
 import { redirect, typedjson, useTypedLoaderData } from "remix-typedjson";
-import { HiExclamation } from "react-icons/hi/index.js";
 import {
   ValidatedForm,
   useIsValid,
-  validationError,
 } from "remix-validated-form";
 import { authenticator } from "utils/auth.server";
 import { db } from "utils/db.server";
@@ -16,13 +14,13 @@ import { FormInput } from "~/components/Common/Input/FormInput";
 import { jobInput } from "~/data/jobForm";
 import { Loading } from "~/components/Common/Message/Loading";
 import { Title } from "~/components/Common/Title/Title";
+import { validateForm } from "utils/validateForm.server";
+import { ErrorToast } from "~/components/Common/Toast/Error";
 
 export const action = async ({ request, params }: ActionFunctionArgs) => {
-  const result = await validator.validate(await request.clone().formData());
+  const validatorErr = await validateForm(request, validator);
 
-  if (result.error) {
-    return validationError(result.error);
-  }
+  if (validatorErr) return validatorErr;
 
   const form = await request.formData();
 
@@ -121,17 +119,7 @@ export default function UpdateJob() {
 
           <Loading state={state} />
         </ValidatedForm>
-        {error && (
-          <Toast>
-            <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-100 text-orange-500 dark:bg-orange-700 dark:text-orange-200">
-              <HiExclamation className="h-5 w-5" />
-            </div>
-            <div className="ml-3 text-sm font-normal">
-              It seems something went wrong. Please try again.
-            </div>
-            <Toast.Toggle />
-          </Toast>
-        )}
+        <ErrorToast error={error} />
       </main>
     </>
   );
