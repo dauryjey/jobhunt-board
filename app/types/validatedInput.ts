@@ -4,4 +4,5 @@ interface ValidatedInput {
   type: string;
   required: boolean;
   addon?: string;
+  rows?: number;
 }

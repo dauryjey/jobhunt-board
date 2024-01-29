@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Job } from "@prisma/client";
+import { Link } from "@remix-run/react";
 import { Badge, Button, Card } from "flowbite-react";
 
 export const UserJobCard = ({ job }: { job: Job }) => {
@@ -19,7 +20,7 @@ export const UserJobCard = ({ job }: { job: Job }) => {
           </Badge>
         ))}
       </div>
-      <Button color="blue">Read More</Button>
+      <Button color="blue" as={Link} to={`/job/details/${job.id}`}>Read More</Button>
     </Card>
   );
 };

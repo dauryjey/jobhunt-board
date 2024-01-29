@@ -7,6 +7,7 @@ interface FormInputProps {
   type: string;
   required: boolean;
   addon?: string;
+  rows?: number;
 }
 
 export const FormInput: React.FC<FormInputProps> = ({
@@ -15,6 +16,7 @@ export const FormInput: React.FC<FormInputProps> = ({
   type,
   required,
   addon,
+  rows
 }: FormInputProps) => {
   const { error, getInputProps } = useField(name);
   return (
@@ -39,6 +41,7 @@ export const FormInput: React.FC<FormInputProps> = ({
               {...getInputProps({ id: name })}
               color={error && "failure"}
               helperText={error}
+              rows={rows || 4}
             />
           ),
           text: (
