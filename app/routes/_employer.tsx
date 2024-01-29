@@ -3,6 +3,7 @@ import { LoaderFunctionArgs } from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
 import { redirect, typedjson, useTypedLoaderData } from "remix-typedjson";
 import { authenticator } from "utils/auth.server";
+import { MainContainer } from "~/components/Common/Container/MainContainer";
 import { NavButtons } from "~/components/Common/NavigationBar/NavButtons";
 import { NavContainer } from "~/components/Common/NavigationBar/NavContainer";
 import { NavigationBar } from "~/components/Common/NavigationBar/NavigationBar";
@@ -29,7 +30,9 @@ export default function EmployerIndex() {
           <NavButtons user={user} />
         </NavigationBar>
       </NavContainer>
-      <Outlet context={user}/>
+      <MainContainer>
+        <Outlet context={user}/>
+      </MainContainer>
     </>
   );
 }

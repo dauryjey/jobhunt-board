@@ -53,6 +53,18 @@ export const FormInput: React.FC<FormInputProps> = ({
               helperText={error}
             />
           ),
+          password: (
+            <TextInput
+            name={name}
+            type={type}
+            required={required}
+            addon={addon}
+            id={name}
+            {...getInputProps({ id: name })}
+            color={error && "failure"}
+            helperText={error}
+            />
+          )
         }[type]
       }
     </div>

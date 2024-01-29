@@ -7,6 +7,7 @@ import { redirect, typedjson, useTypedLoaderData } from "remix-typedjson";
 import { Employer, User } from "@prisma/client";
 import { NavButtons } from "~/components/Common/NavigationBar/NavButtons";
 import { NavContainer } from "~/components/Common/NavigationBar/NavContainer";
+import { MainContainer } from "~/components/Common/Container/MainContainer";
 
 export const meta: MetaFunction = () => {
   return [
@@ -38,7 +39,9 @@ export default function Home() {
           <NavButtons user={user} />
         </NavigationBar>
       </NavContainer>
-      <Outlet />
+      <MainContainer>
+        <Outlet />
+      </MainContainer>
     </>
   );
 }
