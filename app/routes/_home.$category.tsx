@@ -2,10 +2,11 @@ import { LoaderFunctionArgs } from "@remix-run/node";
 import { redirect, typedjson, useTypedLoaderData } from "remix-typedjson";
 import { db } from "utils/db.server";
 import { JobSection } from "~/components/Jobs/JobSection/JobSection";
+import { JOBS_DASHBOARD } from "~/const/routes";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   if (!params.category) {
-    return redirect("/jobs");
+    return redirect(JOBS_DASHBOARD);
   }
 
   // Prisma lacks an insensitive filter for arrays.

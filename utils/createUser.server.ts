@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import { db } from "utils/db.server";
 import { authenticator } from "./auth.server";
 import { validationError } from "remix-validated-form";
+import { JOBS_DASHBOARD } from "~/const/routes";
 
 export const createUser = async (request: Request, isEmployer: boolean) => {
   const form = await request.clone().formData();
@@ -42,7 +43,7 @@ export const createUser = async (request: Request, isEmployer: boolean) => {
     });
 
     return await authenticator.authenticate("form", request, {
-      successRedirect: "/jobs",
+      successRedirect: JOBS_DASHBOARD,
       throwOnError: true,
       context: { FormData: form },
     });

@@ -3,12 +3,13 @@ import { Badge } from "flowbite-react";
 import { redirect, typedjson, useTypedLoaderData } from "remix-typedjson";
 import { checkJobExistence } from "utils/db.checkJobExistence.server";
 import { Status } from "~/components/Jobs/JobCard/Status";
+import { HOME } from "~/const/routes";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const doesJobExist = await checkJobExistence(params);
 
   if (!doesJobExist) {
-    return redirect("/");
+    return redirect(HOME);
   }
 
   return typedjson({ doesJobExist });

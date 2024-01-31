@@ -16,6 +16,7 @@ import { Loading } from "~/components/Common/Message/Loading";
 import { Title } from "~/components/Common/Title/Title";
 import { validateForm } from "utils/validateForm.server";
 import { ErrorToast } from "~/components/Common/Toast/Error";
+import { EMPLOYER_DASHBOARD } from "~/const/routes";
 
 export const action = async ({ request, params }: ActionFunctionArgs) => {
   const validatorErr = await validateForm(request, validator);
@@ -47,7 +48,7 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
       },
     });
 
-    return redirect("/dashboard");
+    return redirect(EMPLOYER_DASHBOARD);
   } catch (err) {
     console.error(err);
     return { err };
@@ -70,13 +71,13 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
     });
 
     if (!job) {
-      return redirect("/dashboard");
+      return redirect(EMPLOYER_DASHBOARD);
     }
 
     return typedjson({ job });
   }
 
-  return redirect("/dashboard");
+  return redirect(EMPLOYER_DASHBOARD);
 };
 
 export default function UpdateJob() {

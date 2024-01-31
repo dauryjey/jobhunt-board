@@ -7,12 +7,13 @@ import { authenticator } from "utils/auth.server";
 import { validator } from "utils/validators/login";
 import { AuthForm } from "~/components/Auth/AuthForm";
 import { Loading } from "~/components/Common/Message/Loading";
+import { JOBS_DASHBOARD, SIGNUP } from "~/const/routes";
 import { inputs } from "~/data/loginForm";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   try {
     return await authenticator.authenticate("form", request, {
-      successRedirect: "/jobs",
+      successRedirect: JOBS_DASHBOARD,
       throwOnError: true,
     });
   } catch (error) {
@@ -53,7 +54,7 @@ export default function Login() {
         <p className="text-center">
           Don&apos;t have an account?{" "}
           <Link
-            to="/signup/user"
+            to={SIGNUP}
             className="text-blue-500 hover:text-blue-700"
             prefetch="intent"
           >

@@ -11,11 +11,12 @@ import { validateForm } from "utils/validateForm.server";
 import { validator } from "utils/validators/proposal";
 import { FormInput } from "~/components/Common/Input/FormInput";
 import { ErrorToast } from "~/components/Common/Toast/Error";
+import { HOME, LOGIN } from "~/const/routes";
 import { proposalForm } from "~/data/proposalForm";
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const user = await authenticator.isAuthenticated(request, {
-    failureRedirect: "/login",
+    failureRedirect: LOGIN,
   });
 
   const { id } = user;
@@ -23,17 +24,17 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const jobId = params.jobId;
 
   if (!user) {
-    return redirect("/login");
+    return redirect(LOGIN);
   }
 
   if (!jobId || user.role === "employer") {
-    return redirect("/");
+    return redirect(HOME);
   }
 
   const doesJobExist = await checkJobExistence(params);
 
   if (!doesJobExist) {
-    return redirect("/");
+    return redirect(HOME);
   }
 
   const hasAppliedForJob = await findUserJobApplication({
@@ -56,7 +57,7 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
   const user = await authenticator.isAuthenticated(request);
 
   if (!user) {
-    return redirect("/");
+    return redirect(HOME);
   }
 
   const { id } = user;

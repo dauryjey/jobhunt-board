@@ -6,6 +6,7 @@ import { inputs } from "~/data/signupForm";
 import { validator } from "utils/validators/signup";
 import { validationError } from "remix-validated-form";
 import { Loading } from "~/components/Common/Message/Loading";
+import { LOGIN, SIGNUP } from "~/const/routes";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const result = await validator.validate(await request.clone().formData());
@@ -39,12 +40,12 @@ export default function EmployerSignUp() {
       </AuthForm>
       <p className="text-center">
         Already have an account?{" "}
-        <Link to="/login" className="text-blue-500 hover:text-blue-700" prefetch="intent">
+        <Link to={LOGIN} className="text-blue-500 hover:text-blue-700" prefetch="intent">
           Log in
         </Link>
       </p>
       <p className="text-center">
-        <Link to="/signup/user" className="text-blue-500 hover:text-blue-700" prefetch="intent">
+        <Link to={SIGNUP} className="text-blue-500 hover:text-blue-700" prefetch="intent">
           Sign up as job hunter
         </Link>
       </p>

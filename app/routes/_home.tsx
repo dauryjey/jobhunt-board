@@ -8,6 +8,7 @@ import { Employer, User } from "@prisma/client";
 import { NavButtons } from "~/components/Common/NavigationBar/NavButtons";
 import { NavContainer } from "~/components/Common/NavigationBar/NavContainer";
 import { MainContainer } from "~/components/Common/Container/MainContainer";
+import { EMPLOYER_DASHBOARD } from "~/const/routes";
 
 export const meta: MetaFunction = () => {
   return [
@@ -22,7 +23,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   );
 
   if (user?.role === "employer") {
-    return redirect("/dashboard");
+    return redirect(EMPLOYER_DASHBOARD);
   }
 
   return typedjson({ user });

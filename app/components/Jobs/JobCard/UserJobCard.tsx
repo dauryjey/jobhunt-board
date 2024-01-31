@@ -2,6 +2,7 @@
 import { Job } from "@prisma/client";
 import { Link } from "@remix-run/react";
 import { Badge, Button, Card } from "flowbite-react";
+import { JOB_DETAILS_USER } from "~/const/routes";
 
 export const UserJobCard = ({ job }: { job: Job }) => {
   return (
@@ -26,7 +27,7 @@ export const UserJobCard = ({ job }: { job: Job }) => {
         className="w-32"
         color="blue"
         as={Link}
-        to={`/job/details/${job.id}`}
+        to={`${JOB_DETAILS_USER}${job.id}`}
       >
         Read More
       </Button>

@@ -11,6 +11,7 @@ import { validator } from "utils/validators/job";
 import { FormInput } from "~/components/Common/Input/FormInput";
 import { Loading } from "~/components/Common/Message/Loading";
 import { Title } from "~/components/Common/Title/Title";
+import { EMPLOYER_DASHBOARD, HOME } from "~/const/routes";
 import { jobInput } from "~/data/jobForm";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -48,13 +49,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         }
       });
   
-      return redirect("/dashboard");
+      return redirect(EMPLOYER_DASHBOARD);
     } catch (err) {
       console.error(err);
       return { err };
     }
   } else {
-    return redirect("/")
+    return redirect(HOME)
   }
 
 };

@@ -1,5 +1,6 @@
 import { type MetaFunction } from "@remix-run/node";
 import { redirect } from "remix-typedjson";
+import { JOBS_DASHBOARD } from "~/const/routes";
 
 export const meta: MetaFunction = () => {
   return [
@@ -9,5 +10,5 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader = async () => {
-  return redirect("/jobs");
+  return redirect(JOBS_DASHBOARD);
 };

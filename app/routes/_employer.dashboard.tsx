@@ -7,6 +7,7 @@ import { authenticator } from "utils/auth.server";
 import { db } from "utils/db.server";
 import { EmployerProfile } from "~/components/Dashboard/EmployerProfile";
 import { JobList } from "~/components/Jobs/JobList/JobList";
+import { CREATE_JOB, JOBS_DASHBOARD } from "~/const/routes";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const user: User | Employer | null = await authenticator.isAuthenticated(
@@ -23,7 +24,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     return typedjson({ jobs });
   }
 
-  return redirect("/jobs");
+  return redirect(JOBS_DASHBOARD);
 };
 export default function Dashboard() {
   const { jobs } = useTypedLoaderData<typeof loader>();
@@ -35,7 +36,7 @@ export default function Dashboard() {
         <EmployerProfile user={user} jobs={jobs} />
         <section className="md:w-4/6">
           <div className="flex justify-center my-4 md:block">
-            <Button color="blue" as={Link} to={"/create"}>Post a new job</Button>
+            <Button color="blue" as={Link} to={CREATE_JOB}>Post a new job</Button>
           </div>
           <div className="grid gap-4">
             <JobList jobs={jobs} isEmployer />
