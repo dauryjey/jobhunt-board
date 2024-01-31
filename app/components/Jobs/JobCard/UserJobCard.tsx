@@ -5,13 +5,15 @@ import { Badge, Button, Card } from "flowbite-react";
 
 export const UserJobCard = ({ job }: { job: Job }) => {
   return (
-    <Card className="max-w-xl">
-      <div>
-      <h5 className="text-2xl font-bold">{job.title}</h5>
-      <small>{job.company}</small>
-      </div>
-      <div className="line-clamp-3">
-        <p className="pb-0.5">{job.description}</p>
+    <Card className="max-w-xl shadow-none border-2 h-full flex">
+      <div className="flex-grow">
+        <div className="place-self-start">
+          <h5 className="text-2xl font-bold">{job.title}</h5>
+          <small>{job.company}</small>
+        </div>
+        <div className="line-clamp-3">
+          <p className="pb-0.5">{job.description}</p>
+        </div>
       </div>
       <div className="flex flex-wrap gap-2">
         {job.requirements.map((requirement, idx) => (
@@ -20,7 +22,14 @@ export const UserJobCard = ({ job }: { job: Job }) => {
           </Badge>
         ))}
       </div>
-      <Button color="blue" as={Link} to={`/job/details/${job.id}`}>Read More</Button>
+      <Button
+        className="w-32"
+        color="blue"
+        as={Link}
+        to={`/job/details/${job.id}`}
+      >
+        Read More
+      </Button>
     </Card>
   );
 };

@@ -1,6 +1,5 @@
 import { Params } from "@remix-run/react";
 import { db } from "./db.server";
-import { typedjson } from "remix-typedjson";
 
 export const checkJobExistence = async (params: Params) => {
   if (!params) {
@@ -23,5 +22,5 @@ export const checkJobExistence = async (params: Params) => {
     return false;
   }
 
-  return typedjson({ job });
+  return { job };
 };

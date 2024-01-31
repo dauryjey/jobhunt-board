@@ -1,14 +1,12 @@
 import { LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
 import { useActionData, useNavigation } from "@remix-run/react";
 import { Badge, Button } from "flowbite-react";
-import { redirect, useTypedLoaderData } from "remix-typedjson";
-import {
-  ValidatedForm,
-  useIsValid,
-} from "remix-validated-form";
+import { redirect, typedjson, useTypedLoaderData } from "remix-typedjson";
+import { ValidatedForm, useIsValid } from "remix-validated-form";
 import { authenticator } from "utils/auth.server";
 import { checkJobExistence } from "utils/db.checkJobExistence.server";
 import { db } from "utils/db.server";
+import { findUserJobApplication } from "utils/findUserJobApplication.server";
 import { validateForm } from "utils/validateForm.server";
 import { validator } from "utils/validators/proposal";
 import { FormInput } from "~/components/Common/Input/FormInput";
@@ -16,9 +14,21 @@ import { ErrorToast } from "~/components/Common/Toast/Error";
 import { proposalForm } from "~/data/proposalForm";
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
-  await authenticator.isAuthenticated(request, {
+  const user = await authenticator.isAuthenticated(request, {
     failureRedirect: "/login",
   });
+
+  const { id } = user;
+
+  const jobId = params.jobId;
+
+  if (!user) {
+    return redirect("/login");
+  }
+
+  if (!jobId || user.role === "employer") {
+    return redirect("/");
+  }
 
   const doesJobExist = await checkJobExistence(params);
 
@@ -26,7 +36,15 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
     return redirect("/");
   }
 
-  return doesJobExist;
+  const hasAppliedForJob = await findUserJobApplication({
+    jobId,
+    userId: id,
+  });
+
+  return typedjson({
+    doesJobExist,
+    hasAppliedForJob,
+  });
 };
 
 export const action = async ({ request, params }: ActionFunctionArgs) => {
@@ -47,15 +65,15 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
   const proposal = form.get("proposal") as string;
 
   try {
-    const application = await db.application.create({
+    await db.application.create({
       data: {
         message: proposal,
         userId: id,
-        jobId
+        jobId,
       },
     });
 
-    return application;
+    return null;
   } catch (err) {
     console.error(err);
     return { err };
@@ -63,52 +81,71 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
 };
 
 export default function JobPost() {
-  const { job } = useTypedLoaderData<typeof loader>();
+  const { doesJobExist, hasAppliedForJob } =
+    useTypedLoaderData<typeof loader>();
+  const { job } = doesJobExist;
   const error = useActionData<typeof action>();
   const isFormValid = useIsValid("proposalForm");
+
   const { state } = useNavigation();
 
   return (
     <>
-      <div>
+      <div className="mb-8">
         <h2 className="text-3xl font-semibold mb-4">Job Details</h2>
       </div>
-      <section className="bg-gray-100 rounded-xl p-4">
-        <h2 className="text-2xl font-medium">
+
+      <section className="bg-gray-100 rounded-xl p-6">
+        <h2 className="text-2xl font-medium mb-2">
           {job.title.toLocaleUpperCase()}
         </h2>
-        <small>{job.company}</small>
-        <p>{job.description}</p>
+        <small className="block text-gray-600 mb-4">{job.company}</small>
+        <p className="mb-4">{job.description}</p>
+
         <div className="flex flex-wrap gap-2">
-          {job.requirements.map((requirement, idx) => (
+          {job.requirements.map((requirement: string, idx: number) => (
             <Badge key={idx} color="dark">
               {requirement}
             </Badge>
           ))}
         </div>
       </section>
-      <section className="mt-4">
-        <div>
-          <span className="text-3xl font-semibold">Send your cover letter</span>
-        </div>
-        <ValidatedForm
-          validator={validator}
-          className="mt-2"
-          id="proposalForm"
-          name="proposalForm"
-          method="post"
-        >
-          <FormInput {...proposalForm} />
-          <Button
-            color="blue"
-            className="mt-4"
-            disabled={!isFormValid || state === "loading"}
-            type="submit"
-          >
-            Send application
-          </Button>
-        </ValidatedForm>
-        <ErrorToast error={error} />
+
+      <section className="mt-8">
+        {hasAppliedForJob ? (
+          <>
+            <h2 className="text-3xl font-semibold mb-4">Your Application</h2>
+            <div className="max-w-2xl overflow-hidden">
+              <p className="mb-4">{hasAppliedForJob.message}</p>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="mb-4">
+              <span className="text-3xl font-semibold">
+                Send Your Cover Letter
+              </span>
+            </div>
+            <ValidatedForm
+              validator={validator}
+              className="mt-2"
+              id="proposalForm"
+              name="proposalForm"
+              method="post"
+            >
+              <FormInput {...proposalForm} />
+              <Button
+                color="blue"
+                className="mt-4"
+                disabled={!isFormValid || state === "loading"}
+                type="submit"
+              >
+                Send Application
+              </Button>
+            </ValidatedForm>
+            <ErrorToast error={error} />
+          </>
+        )}
       </section>
     </>
   );
