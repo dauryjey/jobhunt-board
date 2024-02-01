@@ -3,7 +3,7 @@ import { SiVuedotjs } from "react-icons/si/index.js";
 import { MdMoreHoriz } from "react-icons/md/index.js";
 import { Button } from "flowbite-react";
 import { Link } from "@remix-run/react";
-import { CATEGORY_ANGULAR, CATEGORY_REACT, CATEGORY_VUE, JOBS_DASHBOARD } from "~/const/routes";
+import { CATEGORY_ANGULAR, CATEGORY_REACT, CATEGORY_VUE, JOBS_DASHBOARD_PAGE1 } from "~/const/routes";
 
 export const Categories: React.FC = () => {
   return (
@@ -20,7 +20,7 @@ export const Categories: React.FC = () => {
         <FaAngular className="text-xl mr-2" />
         Angular
       </Button>
-      <Button color="light" size="lg" className="focus:ring-0" as={Link} to={JOBS_DASHBOARD} prefetch="intent">
+      <Button color="light" size="lg" className="focus:ring-0" as={Link} to={JOBS_DASHBOARD_PAGE1} prefetch="intent">
         <MdMoreHoriz className="text-xl mr-2" />
         Others
       </Button>

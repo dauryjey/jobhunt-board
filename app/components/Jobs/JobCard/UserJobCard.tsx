@@ -6,17 +6,17 @@ import { JOB_DETAILS_USER } from "~/const/routes";
 
 export const UserJobCard = ({ job }: { job: Job }) => {
   return (
-    <Card className="max-w-xl shadow-none border-2 h-full flex">
-      <div className="flex-grow">
+    <Card className="max-w-full lg:max-w-xl shadow-none border-2 h-full flex flex-col lg:flex-row p-4 border-box">
+      <div className="flex-grow lg:w-2/3">
         <div className="place-self-start">
-          <h5 className="text-2xl font-bold">{job.title}</h5>
+          <h5 className="text-xl lg:text-2xl font-bold">{job.title}</h5>
           <small>{job.company}</small>
         </div>
         <div className="line-clamp-3">
           <p className="pb-0.5">{job.description}</p>
         </div>
       </div>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 lg:w-1/3">
         {job.requirements.map((requirement, idx) => (
           <Badge key={idx} color="dark">
             {requirement}
@@ -24,7 +24,7 @@ export const UserJobCard = ({ job }: { job: Job }) => {
         ))}
       </div>
       <Button
-        className="w-32"
+        className="w-full lg:w-32 mt-2 lg:mt-0"
         color="blue"
         as={Link}
         to={`${JOB_DETAILS_USER}${job.id}`}

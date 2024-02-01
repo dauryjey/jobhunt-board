@@ -7,7 +7,7 @@ import { MainContainer } from "~/components/Common/Container/MainContainer";
 import { NavButtons } from "~/components/Common/NavigationBar/NavButtons";
 import { NavContainer } from "~/components/Common/NavigationBar/NavContainer";
 import { NavigationBar } from "~/components/Common/NavigationBar/NavigationBar";
-import { JOBS_DASHBOARD } from "~/const/routes";
+import { JOBS_DASHBOARD_PAGE1 } from "~/const/routes";
 
 export const meta: MetaFunction = () => {
   return [
@@ -25,7 +25,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     return typedjson({ user });
   }
 
-  return redirect(JOBS_DASHBOARD);
+  return redirect(JOBS_DASHBOARD_PAGE1);
 };
 
 export default function EmployerIndex() {

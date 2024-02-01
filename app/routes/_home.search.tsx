@@ -4,14 +4,14 @@ import { redirect, typedjson, useTypedLoaderData } from "remix-typedjson";
 import { db } from "utils/db.server";
 import { Categories } from "~/components/Common/Categories/Categories";
 import { JobList } from "~/components/Jobs/JobList/JobList";
-import { JOBS_DASHBOARD } from "~/const/routes";
+import { JOBS_DASHBOARD_PAGE1 } from "~/const/routes";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const query = url.searchParams.get("q");
 
   if (!query) {
-    return redirect(JOBS_DASHBOARD);
+    return redirect(JOBS_DASHBOARD_PAGE1);
   }
 
   const jobs = await db.job.findMany({

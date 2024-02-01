@@ -2,7 +2,7 @@ import { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
 import { authenticator } from "utils/auth.server";
 import { NavigationBar } from "~/components/Common/NavigationBar/NavigationBar";
-import { JOBS_DASHBOARD } from "~/const/routes";
+import { JOBS_DASHBOARD_PAGE1 } from "~/const/routes";
 
 export const meta: MetaFunction = () => {
   return [
@@ -13,7 +13,7 @@ export const meta: MetaFunction = () => {
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const user = await authenticator.isAuthenticated(request, {
-    successRedirect: JOBS_DASHBOARD,
+    successRedirect: JOBS_DASHBOARD_PAGE1,
   });
 
   return user;
