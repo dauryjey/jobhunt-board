@@ -23,6 +23,7 @@ export const jobInput: ValidatedInput[] = [
     value: "Description",
     type: "textarea",
     required: true,
+    rows: 6,
   },
   {
     name: "requirements",

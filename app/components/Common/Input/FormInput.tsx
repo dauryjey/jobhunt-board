@@ -41,7 +41,8 @@ export const FormInput: React.FC<FormInputProps> = ({
               {...getInputProps({ id: name })}
               color={error && "failure"}
               helperText={error}
-              rows={rows || 4}
+              rows={rows || 5}
+              className="resize-none"
             />
           ),
           text: (

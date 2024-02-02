@@ -1,6 +1,6 @@
 import { Employer, User } from "@prisma/client";
 import { LoaderFunctionArgs } from "@remix-run/node";
-import { Link, useNavigate, useOutletContext } from "@remix-run/react";
+import { Link, Outlet, useNavigate, useOutletContext } from "@remix-run/react";
 import { Button, Pagination } from "flowbite-react";
 import { redirect, typedjson, useTypedLoaderData } from "remix-typedjson";
 import { authenticator } from "utils/auth.server";
@@ -53,18 +53,22 @@ export default function Dashboard() {
 
   return (
     <>
-      <section className="md:flex gap-5 [&>aside]:place-self-center">
+      <section className="md:flex gap-5">
         <EmployerProfile user={user} jobs={jobs} />
         <section className="md:w-4/6">
-          <div className="flex justify-center my-4 md:block">
+          <div className="flex justify-center my-4 xl:block">
             <Button color="blue" as={Link} to={CREATE_JOB}>
               Post a new job
             </Button>
           </div>
-          <section className="grid justify-center md:justify-start gap-4 box-border">
-            <JobList jobs={jobs} isEmployer />
+          <section className="flex flex-col xl:flex-row gap-10">
+            <div className="flex flex-col items-center xl:items-start gap-4 box-border [&>div]:w-full order-2">
+              <span className="font-semibold text-2xl self-start">Jobs</span>
+              <JobList jobs={jobs} isEmployer />
+            </div>
+            <Outlet />
           </section>
-          <section className="flex my-4 justify-center md:justify-start">
+          <section className="flex my-4 justify-center xl:justify-start">
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}

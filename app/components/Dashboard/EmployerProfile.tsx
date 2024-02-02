@@ -10,7 +10,7 @@ export const EmployerProfile: React.FC<EmployerProfileProps> = ({ user, jobs }: 
   const fullName = `${user.firstName} ${user.lastName}`
 
   return (
-    <aside className="flex flex-col justify-between bg-gray-100 p-5 self-center rounded-xl md:w-2/6 md:h-[80vh]">
+    <aside className="flex flex-col justify-between bg-gray-100 p-5 rounded-xl md:w-2/6 md:h-[80vh]">
     <section>
       <p className="font-semibold text-2xl md:text-4xl">{fullName}</p>
       <p><span className="font-semibold">Email:</span> {user.email}</p>

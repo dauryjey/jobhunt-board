@@ -10,13 +10,13 @@ export const JOBS_DASHBOARD_PAGE= "/jobs?page=";
 export const JOBS_DASHBOARD_PAGE1 = "/jobs?page=1";
 export const EMPLOYER_DASHBOARD_PAGE = "/dashboard?page=";
 export const EMPLOYER_DASHBOARD = "/dashboard?page=1";
-export const CREATE_JOB = "/create";
+export const CREATE_JOB = "/dashboard/create";
 export const DELETE_JOB = "/delete/";
-export const UPDATE_JOB = "/update/";
+export const UPDATE_JOB = "/dashboard/update/";
 
 // Job Details
 export const JOB_DETAILS_USER = "/job/details/";
-export const JOB_DETAILS_EMPLOYER = "/job/";
+export const JOB_DETAILS_EMPLOYER = "/dashboard/job/";
 
 // Search and Categories
 export const SEARCH = "/search";

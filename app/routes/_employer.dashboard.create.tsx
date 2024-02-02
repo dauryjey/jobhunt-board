@@ -1,7 +1,6 @@
 import { Employer, User } from "@prisma/client";
 import { useActionData, useNavigation } from "@remix-run/react";
-import { Button, Toast } from "flowbite-react";
-import { HiExclamation } from "react-icons/hi/index.js";
+import { Button } from "flowbite-react";
 import { ActionFunctionArgs } from "react-router";
 import { redirect } from "remix-typedjson";
 import { ValidatedForm, useIsValid, validationError } from "remix-validated-form";
@@ -10,7 +9,7 @@ import { db } from "utils/db.server";
 import { validator } from "utils/validators/job";
 import { FormInput } from "~/components/Common/Input/FormInput";
 import { Loading } from "~/components/Common/Message/Loading";
-import { Title } from "~/components/Common/Title/Title";
+import { ErrorToast } from "~/components/Common/Toast/Error";
 import { EMPLOYER_DASHBOARD, HOME } from "~/const/routes";
 import { jobInput } from "~/data/jobForm";
 
@@ -68,15 +67,16 @@ export default function CreateJob () {
 
   return (
     <>
-      <main className="flex flex-col justify-center items-center gap-4">
-        <section className="mt-2">
-          <Title title="Create job" />
+      <section className="flex flex-col gap-4 w-full order-1 xl:order-3 xl:ml-10">
+        <section>
+        <span className="font-semibold text-2xl">Create</span>
         </section>
         <ValidatedForm
           id="jobUpdate"
           method="put"
           validator={validator}
           className="grid gap-4 w-[300px]"
+          defaultValues={{}}
         >
           {jobInput.map((input) => (
             <FormInput key={input.name} {...input} />
@@ -92,17 +92,7 @@ export default function CreateJob () {
 
           <Loading state={state} />
         </ValidatedForm>
-        {error && (
-          <Toast>
-            <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-100 text-orange-500 dark:bg-orange-700 dark:text-orange-200">
-              <HiExclamation className="h-5 w-5" />
-            </div>
-            <div className="ml-3 text-sm font-normal">
-              It seems something went wrong. Please try again.
-            </div>
-            <Toast.Toggle />
-          </Toast>
-        )}
-      </main>
+        <ErrorToast error={error} />
+      </section>
     </>
 )}

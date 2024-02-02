@@ -3,17 +3,13 @@ import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { useActionData, useNavigation } from "@remix-run/react";
 import { Button } from "flowbite-react";
 import { redirect, typedjson, useTypedLoaderData } from "remix-typedjson";
-import {
-  ValidatedForm,
-  useIsValid,
-} from "remix-validated-form";
+import { ValidatedForm, useIsValid } from "remix-validated-form";
 import { authenticator } from "utils/auth.server";
 import { db } from "utils/db.server";
 import { validator } from "utils/validators/job";
 import { FormInput } from "~/components/Common/Input/FormInput";
 import { jobInput } from "~/data/jobForm";
 import { Loading } from "~/components/Common/Message/Loading";
-import { Title } from "~/components/Common/Title/Title";
 import { validateForm } from "utils/validateForm.server";
 import { ErrorToast } from "~/components/Common/Toast/Error";
 import { EMPLOYER_DASHBOARD } from "~/const/routes";
@@ -89,10 +85,10 @@ export default function UpdateJob() {
 
   return (
     <>
-      <main className="flex flex-col justify-center items-center gap-4">
-        <section className="mt-2">
-          <Title title="Update job" />
-        </section>
+      <section className="flex flex-col gap-4 w-full order-1 xl:order-3 xl:ml-10">
+        <div>
+          <span className="font-semibold text-2xl">Update</span>
+        </div>
         <ValidatedForm
           id="jobUpdate"
           method="put"
@@ -104,7 +100,7 @@ export default function UpdateJob() {
             description: job?.description,
             requirements: job?.requirements.join(", "),
           }}
-          className="grid gap-4 w-[300px]"
+          className="grid gap-4 w-[300px] self-center xl:self-start"
         >
           {jobInput.map((input) => (
             <FormInput key={input.name} {...input} />
@@ -112,7 +108,6 @@ export default function UpdateJob() {
           <Button
             type="submit"
             color="blue"
-            pill
             disabled={!isFormValid || state === "loading"}
           >
             Submit
@@ -121,7 +116,7 @@ export default function UpdateJob() {
           <Loading state={state} />
         </ValidatedForm>
         <ErrorToast error={error} />
-      </main>
+      </section>
     </>
   );
 }
