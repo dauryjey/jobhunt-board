@@ -29,8 +29,6 @@ export const getPagination = async ({
 
   typeof currentPage === "string" ? parsedCurrentPage = Number.parseInt(currentPage): parsedCurrentPage = currentPage
 
-  console.log(currentPage)
-
   const totalPages = Math.ceil(totalRecords / pageSize);
 
   const skip = (parsedCurrentPage - 1) * pageSize;

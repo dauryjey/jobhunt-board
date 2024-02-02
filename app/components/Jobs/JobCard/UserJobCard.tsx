@@ -16,7 +16,7 @@ export const UserJobCard = ({ job }: { job: Job }) => {
           <p className="pb-0.5">{job.description}</p>
         </div>
       </div>
-      <div className="flex flex-wrap gap-2 lg:w-1/3">
+      <div className="flex flex-wrap gap-2">
         {job.requirements.map((requirement, idx) => (
           <Badge key={idx} color="dark">
             {requirement}
