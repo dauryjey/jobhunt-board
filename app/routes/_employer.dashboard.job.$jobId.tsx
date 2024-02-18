@@ -31,7 +31,7 @@ export default function JobDetails() {
 
   return (
     <>
-      <section>
+      <section className="w-full">
         <div>
           <h2 className="text-2xl font-semibold mb-4">Your job posting</h2>
           <div className="bg-gray-100 rounded-xl p-4">

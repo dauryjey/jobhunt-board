@@ -62,7 +62,7 @@ export default function Dashboard() {
             </Button>
           </div>
           <section className="flex flex-col xl:flex-row gap-10">
-            <div className="flex flex-col items-center xl:items-start gap-4 box-border [&>div]:w-full order-2">
+            <div className="flex flex-col items-center xl:items-start xl:justify-end gap-4 box-border [&>div]:w-full order-2">
               <span className="font-semibold text-2xl self-start">Jobs</span>
               <JobList jobs={jobs} isEmployer />
             </div>
